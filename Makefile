@@ -8,8 +8,8 @@ FLAGS = -std=c++11 -lm -g -Wall
 
 all: $(TARGET1)
 
-$(TARGET1): $(OBJECT1)
-	$(CC) $< -o $@ $(FLAGS)
+$(TARGET1): $(OBJECT1) $(OBJECT2)
+	$(CC) $< $(OBJECT2) -o $@ $(FLAGS)
 
 %.o: %.c
 	$(CC) -c $< -o $@

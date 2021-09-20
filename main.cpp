@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
 
     filename = "temp_data" + FILE_ENDING;
     create_file_from_input(filename);
-
   // TODO: CONFIRM VALID FILE
   // After getting/creating file, use it to build tree
   }
@@ -43,7 +42,14 @@ int main(int argc, char *argv[]) {
   }
 
   // TODO: Print traversals at the end
-  Node *root = createTree(filename);
+  Node *root = build_tree(filename);
+
+  if (root == NULL) {
+    std::cout << "Data was empty. Exiting." << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  /* print_in_order(filename, root); */
 
   return 0;
 }

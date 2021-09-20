@@ -2,18 +2,23 @@
 #define NODE_H
 
 // Only here because they are used in the node vars
-#include <vector>
 #include <string>
+#include <set>
 
 // Modified off https://www.geeksforgeeks.org/binary-tree-set-1-introduction/
 struct Node {
-  // Change key to letter to hold top level
+  // Key will be letter
   char letter;
+  int depth;
 
-  std::vector<std::string> words;
+  // Use vector to avoid having to resize arrays
+  std::set<std::string> words;
 
+  // Binary Tree
   struct Node *left;
   struct Node *right;
+  struct Node *next;
 };
+
 
 #endif
