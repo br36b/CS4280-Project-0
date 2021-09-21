@@ -8,14 +8,15 @@ printInorder()
 printPreorder()
 printPostorder() */
 
+// print functions moved to traversal files now
+
 Node *build_tree(std::string);
-void print_in_order(std::string, Node*);
-void print_pre_order(std::string, Node*);
-void print_post_order(std::string, Node*);
 
 struct Node *new_node(char, std::string, int);
 struct Node *insert_node(struct Node *, char, std::string);
-struct Node *minValueNode(struct Node *Node);
-struct Node *deleteNode(struct Node *root, int key);
+
+// Unneeded ones from link in .cpp
+/* struct Node *minValueNode(struct Node *Node); */
+/* struct Node *deleteNode(struct Node *root, int key); */
 
 #endif

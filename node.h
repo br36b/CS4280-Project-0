@@ -5,7 +5,7 @@
 #include <string>
 #include <set>
 
-// Modified off https://www.geeksforgeeks.org/binary-tree-set-1-introduction/
+// Modified struct for bst off https://www.geeksforgeeks.org/binary-tree-set-1-introduction/
 struct Node {
   // Key will be letter
   char letter;
@@ -15,9 +15,9 @@ struct Node {
   std::set<std::string> words;
 
   // Binary Tree
-  struct Node *left;
-  struct Node *right;
-  struct Node *next;
+  Node *left;
+  Node *right;
+  Node *next;
 };
 
 

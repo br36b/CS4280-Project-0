@@ -1,18 +1,19 @@
-CC = g++
-OBJECT1 = main.o
-OBJECT2 = tree.o
+CC	= g++ -g3
+CFLAGS	= -std=c++11 -g3
+TARGET	= P0
+OBJS	= main.o tree.o tree_traversal.o
 
-TARGET1 = P0
+$(TARGET):	$(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
 
-FLAGS = -std=c++11 -lm -g -Wall
+main.o:	main.cpp tree.h tree_traversal.h node.h
+	$(CC) $(CFLAGS) -c main.cpp
 
-all: $(TARGET1)
+tree.o:	tree.cpp tree.h node.h
+	$(CC) $(CFLAGS) -c tree.cpp
 
-$(TARGET1): $(OBJECT1) $(OBJECT2)
-	$(CC) $< $(OBJECT2) -o $@ $(FLAGS)
-
-%.o: %.c
-	$(CC) -c $< -o $@
+tree_traversal.o: tree_traversal.cpp tree_traversal.h node.h
+	$(CC) $(CFLAGS) -c tree_traversal.cpp
 
 clean:
-	rm -f *.o $(TARGET1) temp_data.fl2021
+	rm -f *.o *.preorder *.inorder *.postorder $(TARGET)

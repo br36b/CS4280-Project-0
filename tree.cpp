@@ -39,35 +39,11 @@ Node *build_tree(std::string filename) {
     // Swap to .at() for compiler here
     letter = temp_input.at(0);
 
-    std::cout << "TEMP LETTER" << letter << std::endl;
+    /* std::cout << " LETTER: " << letter << " Word: " << temp_input << std::endl;; */
     insert_node(start, letter, temp_input);
   }
 
   return start;
-}
-
-// Each of the traversals will write them to their respective file
-void print_in_order(std::string filename, Node *root) {
-  std::cout << "Printing In-Order Traversal" << std::endl;
-
-  /* if (root != NULL) { */
-  /*   // Traverse left */
-  /*   print_in_order(root->left); */
-
-  /*   // Traverse root */
-  /*   std::cout << root->key << " -> "; */
-
-  /*   // Traverse right */
-  /*   print_in_order(root->right); */
-  /* } */
-}
-
-void print_pre_order(std::string filename, Node *root) {
-  std::cout << "Printing Pre-Order Traversal" << std::endl;
-}
-
-void print_post_order(std::string filename, Node *root) {
-  std::cout << "Printing Post-Order Traversal" << std::endl;
 }
 
 // Reusing node creation from https://www.programiz.com/dsa/binary-search-tree
@@ -75,19 +51,25 @@ void print_post_order(std::string filename, Node *root) {
 
 // Create a Node
 struct Node *new_node(char letter, std::string word, int depth) {
-  struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+  // MUST convert to new standard to avoid segfault
+  // Set was probably eating more space than allocated at start
+  struct Node *temp_node = new Node;
 
-  temp->letter = letter;
-  temp->left = temp->right = NULL;
+  temp_node->letter = letter;
+  temp_node->depth = depth;
 
-  temp->depth = depth;
-  temp->words.insert(word);
+  temp_node->left = temp_node->right = temp_node->next= NULL;
 
-  return temp;
+  // Make sure enough space for a set for future reference
+  temp_node->words.insert(word);
+
+  return temp_node;
 }
 
 // Insert a Node
-struct Node *insert_node(struct Node *temp, char letter, std::string word) {
+Node *insert_node(Node *temp, char letter, std::string word) {
+  /* std::cout << "Inserting Node" << std::endl; */
+
   // Return a new node if the tree is empty
   if (start == NULL) {
     start = new_node(letter, word, 0);
@@ -111,7 +93,7 @@ struct Node *insert_node(struct Node *temp, char letter, std::string word) {
     }
     // Otherwise reuse process, create a node at that point
     else {
-      insert_node(temp->left, letter, word);
+      insert_node(temp->right, letter, word);
     }
   }
   // Letter is less than node
@@ -129,6 +111,9 @@ struct Node *insert_node(struct Node *temp, char letter, std::string word) {
       insert_node(temp->left, letter, word);
     }
   }
+  else {
+    std::cout << "Double Check." << std::endl;
+  }
 
   /* // Traverse to the right place and insert the node */
   /* if (letter < temp->letter) */
@@ -140,47 +125,48 @@ struct Node *insert_node(struct Node *temp, char letter, std::string word) {
 }
 
 
-// Find the inorder successor
-struct Node *minValueNode(struct Node *Node) {
-  struct Node *current = Node;
+// Extra code from source link above
+/* // Find the inorder successor */
+/* struct Node *minValueNode(struct Node *Node) { */
+/*   struct Node *current = Node; */
 
-  // Find the leftmost leaf
-  while (current && current->left != NULL)
-    current = current->left;
+/*   // Find the leftmost leaf */
+/*   while (current && current->left != NULL) */
+/*     current = current->left; */
 
-  return current;
-}
+/*   return current; */
+/* } */
 
-// Deleting a Node
-struct Node *deleteNode(struct Node *root, int key) {
-  // Return if the tree is empty
-  if (root == NULL) return root;
+/* // Deleting a Node */
+/* struct Node *deleteNode(struct Node *root, int key) { */
+/*   // Return if the tree is empty */
+/*   if (root == NULL) return root; */
 
-  // Find the Node to be deleted
-  if (key < root->letter)
-    root->left = deleteNode(root->left, key);
-  else if (key > root->letter)
-    root->right = deleteNode(root->right, key);
-  else {
-    // If the Node is with only one child or no child
-    if (root->left == NULL) {
-      struct Node *temp = root->right;
-      free(root);
-      return temp;
-    } else if (root->right == NULL) {
-      struct Node *temp = root->left;
-      free(root);
-      return temp;
-    }
+/*   // Find the Node to be deleted */
+/*   if (key < root->letter) */
+/*     root->left = deleteNode(root->left, key); */
+/*   else if (key > root->letter) */
+/*     root->right = deleteNode(root->right, key); */
+/*   else { */
+/*     // If the Node is with only one child or no child */
+/*     if (root->left == NULL) { */
+/*       struct Node *temp = root->right; */
+/*       free(root); */
+/*       return temp; */
+/*     } else if (root->right == NULL) { */
+/*       struct Node *temp = root->left; */
+/*       free(root); */
+/*       return temp; */
+/*     } */
 
-    // If the Node has two children
-    struct Node *temp = minValueNode(root->right);
+/*     // If the Node has two children */
+/*     struct Node *temp = minValueNode(root->right); */
 
-    // Place the inorder successor in position of the Node to be deleted
-    root->letter = temp->letter;
+/*     // Place the inorder successor in position of the Node to be deleted */
+/*     root->letter = temp->letter; */
 
-    // Delete the inorder successor
-    root->right = deleteNode(root->right, temp->letter);
-  }
-  return root;
-}
+/*     // Delete the inorder successor */
+/*     root->right = deleteNode(root->right, temp->letter); */
+/*   } */
+/*   return root; */
+/* } */
